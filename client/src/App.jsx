@@ -3,6 +3,7 @@ import Header from './componets/Header'
 import {ApolloProvider, ApolloClient , InMemoryCache} from '@apollo/client'
 import Clients from './componets/Clients';
 import AddClientModel from './componets/AddClientModel';
+
 const cache = new InMemoryCache({
   typePolicies:{
       Query:{
@@ -34,6 +35,7 @@ const App = () => {
              <Header/>
             <div className='container'>
               <AddClientModel/>
+             
               <Clients/>
              </div>
         </ApolloProvider>
