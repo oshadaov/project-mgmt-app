@@ -100,15 +100,20 @@ const mutation = new GraphQLObjectType({
             },
         },
         //Delete a client
-        deleteClient : {
-            type : ClientType,
-            args : {
-                id :{type : GraphQLNonNull(GraphQLID)},
+        deleteClient: {
+            type: ClientType,
+            args: {
+              id: { type: GraphQLNonNull(GraphQLID) },
             },
-            resolve(parent , args){
-                return Client.findByIdAndDelete(args.id);
-            }
-        },
+            async resolve(parent, args) {
+              // Delete all projects associated with this client in one operation
+              await Project.deleteMany({ clientId: args.id });
+          
+              // Now delete the client
+              return await Client.findByIdAndDelete(args.id);
+            },
+          },
+          
         //Add a project
         addProject : {
             type :ProjectType,
